@@ -23,8 +23,8 @@ class Queuing {
                 "eventNeed": object.afterEvent ? true : false
             });
             this.queue.push(newObject);
-            if (notExecButSkip) return this._executeQueue(newObject);
-            if (!firstElementExecute && object.afterEvent != null) return this._queueNextUp(newObject, true);
+            if (notExecButSkip && this.queue.length == 1) return this._queueNextUp(newObject);
+            if (!firstElementExecute && object.afterEvent != null && this.queue.length == 1) return this._queueNextUp(newObject, true);
             if (firstElementExecute && this.queue.length == 1 && this.paused == false) this._executeQueue(resolve, reject);
         });
     }
