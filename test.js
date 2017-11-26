@@ -1,4 +1,5 @@
-const queueSystem = require("./index.js");
+let queueSystem = require("./index.js");
+queueSystem = new queueSystem();
 
 function testing(i) {
     return new Promise((resolve, reject) => {
@@ -43,6 +44,10 @@ queueSystem.addToQueue({
     }
 }, null, true).then(() => {
     queueSystem.pause();
+
+    queueSystem.clearQueue();
+
+    console.log(queueSystem.allQueueArgs);
 
     queueSystem.queue.forEach((queue, ind) => {
         if (queue.args[0] == 3) queueSystem.unQueue(ind);

@@ -103,6 +103,26 @@ class Queuing {
             this.queue.splice(ind, 1);
         });
     }
+
+    get allQueueArgs() {
+        let array = [];
+        this.queue.forEach(object => {
+            array.push(...object.args);
+        });
+        return array;
+    }
+
+    get allQueueValues() {
+        let array = [];
+        this.queue.forEach(object => {
+            array.push(object.value);
+        });
+        return array;
+    }
+
+    clearQueue() {
+        this.queue = [];
+    }
 }
 
 function waitingToPass(queueF) {
