@@ -70,9 +70,15 @@ class Queuing {
 
     _queueNextUp(queueF, skip = false) {
         let $this = this;
-        if (skip) return queueF.afterEvent.emitter.once(queueF.afterEvent.event, waitingToPassSkip.bind(this, queueF));
+        if (skip) {
+            let emitter = typeof (queueF.afterEvent.emitter) == "function" ? queueF.afterEvent.emitter() : queueF.afterEvent.emitter;
+            if (!emitter) return
+            return emitter.once(queueF.afterEvent.event, waitingToPassSkip.bind(this, queueF));
+        }
         if (queueF.eventNeed) {
-            queueF.afterEvent.emitter.once(queueF.afterEvent.event, waitingToPass.bind(this, queueF));
+            let emitter = typeof (queueF.afterEvent.emitter) == "function" ? queueF.afterEvent.emitter() : queueF.afterEvent.emitter;
+            if (!emitter) return
+            emitter.once(queueF.afterEvent.event, waitingToPass.bind(this, queueF));
         } else {
             setTimeout(() => { // Adding a timeout of 5 ms so if the user pause the queue direclty after one finish it will be paused
                 if (this.paused) return;
@@ -89,6 +95,13 @@ class Queuing {
     resume() {
         this.paused = false;
         this._executeQueue();
+    }
+
+    unQueue(ind = 0) {
+        return new Promise((resolve, reject) => {
+            if (!this.queue[ind]) return reject("Nothing found with this index");
+            this.queue.splice(ind, 1);
+        });
     }
 }
 
@@ -109,4 +122,4 @@ function waitingToPassSkip(queueF) {
     }, 5);
 }
 
-module.exports = new Queuing();
+module.exports = Queuing;

@@ -41,7 +41,17 @@ queueSystem.addToQueue({
         "emitter": events,
         "event": "fire"
     }
-}, null, true).then(console.log);
+}, null, true).then(() => {
+    queueSystem.pause();
+
+    queueSystem.queue.forEach((queue, ind) => {
+        if (queue.args[0] == 3) queueSystem.unQueue(ind);
+    });
+
+    setTimeout(() => {
+        queueSystem.resume();
+    }, 10000);
+});
 
 queueSystem.addToQueue({
     "value": wut,
