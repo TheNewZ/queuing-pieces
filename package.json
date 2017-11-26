@@ -1,0 +1,8 @@
+{
+  "name": "queuing-pieces",
+  "version": "1.0.0",
+  "description": "A node module to let you do a queues of almost anything \"strings, arrays, function, objects, ect\"",
+  "main": "index.js",
+  "author": "Zelak",
+  "license": "MIT"
+}
