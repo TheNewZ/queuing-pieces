@@ -39,7 +39,7 @@ class Queuing {
             if (queueF.functionType) { //means it's a function
                 try {
                     let result = queueF.value(...queueF.args);
-                    if (result.then) { //It's a promise
+                    if (result && result.then) { //It's a promise
                         if (queueF.eventNeed) this._queueNextUp(queueF);
                         result.then((...promiseRe) => {
                             if (!Array.isArray(promiseRe)) promiseRe = [promiseRe];

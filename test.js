@@ -16,29 +16,54 @@ function otherTest(i) {
     });
 }
 
+function wut(i) {
+    console.log(i);
+    return i;
+}
+
 const eventEmitter = require("events");
 
 let events = new eventEmitter.EventEmitter();
 
 queueSystem.addToQueue({
-    "value": "lol",
+    "value": wut,
+    "args": [1],
     "afterEvent": {
         "emitter": events,
         "event": "fire"
     }
-}).then(console.log);
+}, null, true).then(console.log);
 
 queueSystem.addToQueue({
-    "value": "what",
+    "value": wut,
+    "args": [2],
     "afterEvent": {
         "emitter": events,
         "event": "fire"
     }
-}).then(console.log);
+}, null, true).then(console.log);
+
+queueSystem.addToQueue({
+    "value": wut,
+    "args": [3],
+    "afterEvent": {
+        "emitter": events,
+        "event": "fire"
+    }
+}, null, true).then(console.log);
+
+queueSystem.addToQueue({
+    "value": wut,
+    "args": [4],
+    "afterEvent": {
+        "emitter": events,
+        "event": "fire"
+    }
+}, null, true).then(console.log);
 
 setInterval(() => {
     events.emit("fire");
-}, 10000);
+}, 3000);
 
 process.on('unhandledRejection', error => {
     // Prints "unhandledRejection woops!"
