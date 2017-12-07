@@ -96,6 +96,11 @@ class Queuing {
         this.paused = false;
         this._executeQueue();
     }
+    
+    shuffle() {
+        if(this.queue.length == 0) return;
+        this.queue = shuffle(this.queue);
+    }
 
     unQueue(ind = 0) {
         return new Promise((resolve, reject) => {
@@ -140,6 +145,14 @@ function waitingToPassSkip(queueF) {
         if ($this.paused) return;
         $this._executeQueue();
     }, 5);
+}
+
+function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
 }
 
 module.exports = Queuing;
